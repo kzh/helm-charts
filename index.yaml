@@ -1,9 +1,20 @@
 apiVersion: v1
 entries:
+  jellyfin:
+  - apiVersion: v2
+    appVersion: 10.6.4
+    created: "2021-03-06T04:15:58.16477-05:00"
+    description: Deploy Jellyfin
+    digest: 1aeb2f5ac071833f83410cbc12f353ba379f21f1d5288d79524fe00de6f7b227
+    name: jellyfin
+    type: application
+    urls:
+    - https://charts.kzh.dev/jellyfin-0.1.0.tgz
+    version: 0.1.0
   nextcloud:
   - apiVersion: v2
     appVersion: 21.0.0
-    created: "2021-03-05T19:41:31.00683-05:00"
+    created: "2021-03-06T04:15:58.172878-05:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -18,4 +29,4 @@ entries:
     urls:
     - https://charts.kzh.dev/nextcloud-0.1.0.tgz
     version: 0.1.0
-generated: "2021-03-05T19:41:30.997309-05:00"
+generated: "2021-03-06T04:15:58.164208-05:00"
