@@ -5,8 +5,20 @@ postgresql:
   postgresqlDatabase: "nextcloud"
 
   persistence:
-    size: 20Gi
+    size: 30Gi
     storageClass: rook-ceph-block
+
+  primary:
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - nextcloud
+          topologyKey: kubernetes.io/hostname 
 
   rbac:
     create: true
@@ -17,13 +29,19 @@ redis:
   cluster:
     enabled: false
 
-  usePassword: false
-
   master:
-    resources:
-      requests:
-        cpu: 2
-        memory: 36Gi
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - nextcloud
+          topologyKey: kubernetes.io/hostname 
+
+  usePassword: false
 
   rbac:
     create: true

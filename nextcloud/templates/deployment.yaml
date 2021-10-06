@@ -16,11 +16,14 @@ spec:
     spec:
       containers:
       - name: nextcloud
-        image: nextcloud:21.0.0-apache
+        image: nextcloud:21.0.2-apache
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: storage-pv
+        - name: storage
+          mountPath: "/transmission"
+          subPath: "transmission/complete"
+        - name: storage
           mountPath: "/var/www/html"
           subPath: "nextcloud"
         env:
@@ -33,10 +36,10 @@ spec:
         - name: POSTGRES_HOST
           value: "nextcloud-postgresql.storage"
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "localhost,nc.faust.dev,nc.kzh.dev"
+          value: "localhost,nc.faust.dev"
         - name: REDIS_HOST
           value: "nextcloud-redis-master.storage"
       volumes:
-      - name: storage-pv
+      - name: storage
         persistentVolumeClaim:
           claimName: storage

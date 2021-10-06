@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  namespace: storage
+  labels:
+    app: transmission
+spec:
+  selector:
+    matchLabels:
+      app: transmission
+  template:
+    metadata:
+      labels:
+        app: transmission
+    spec:
+      containers:
+      - name: transmission
+        image: ghcr.io/kzh/transmission:1.0
+        ports:
+        - containerPort: 9091
+        volumeMounts:
+        - name: storage
+          mountPath: "/transmission"
+          subPath: "transmission"
+        securityContext:
+          privileged: true
+        env:
+        - name: PREFERRED_REGION
+          value: "sweden"
+        - name: PIA_USER 
+          valueFrom:
+            secretKeyRef:
+              name: pia
+              key: username
+        - name: PIA_PASS
+          valueFrom:
+            secretKeyRef:
+              name: pia
+              key: password
+      nodeSelector:
+        kubernetes.io/hostname: mx2
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: storage
